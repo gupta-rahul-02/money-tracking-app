@@ -10,7 +10,7 @@ function App() {
 
   useEffect(()=>{
    getTransactions().then(setTransactions)
-  },[])
+  },[transactions])
 
   async function getTransactions (){
     const apiurl = "http://localhost:4000/api"
