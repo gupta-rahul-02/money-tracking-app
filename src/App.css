@@ -96,3 +96,12 @@ div.transaction div.datetime{
   font-size: 0.8rem;
   color: #888;
 }
+
+.clear-btn{
+  width: 100%;
+  margin-top: 5px;
+  border: 0;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #ddd;
+}

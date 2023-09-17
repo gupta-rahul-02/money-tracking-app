@@ -15,7 +15,7 @@ const TransactionSchema = new Schema({
     required: true,
   },
   datetime: {
-    type: Date,
+    type: String,
     required: true,
   },
 });

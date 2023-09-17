@@ -25,6 +25,12 @@ app.get('/api/transactions',async (req,res) =>{
     res.json(transactions)
 })
 
+app.put('/api/cleartransactions',async(req,res) =>{
+    await mongoose.connect('mongodb+srv://rahulguptaslg20:India11@cluster0.nivdtho.mongodb.net/?retryWrites=true&w=majority')
+    await Transaction.deleteMany();
+    res.json('deleted') 
+})
+
 app.listen(4000,()=>{
     console.log("connected to 4000")
 })

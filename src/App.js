@@ -1,4 +1,3 @@
-//import { json, response } from "express";
 import "./App.css";
 import { useEffect, useState } from "react";
 
@@ -10,19 +9,35 @@ function App() {
 
   useEffect(()=>{
    getTransactions().then(setTransactions)
-  },[transactions])
+  },[])
 
   async function getTransactions (){
     const apiurl = "http://localhost:4000/api"
     const response = await fetch(apiurl+"/transactions")
-    return await response.json()
+    const r = await response.json()
+    return r
   }
 
-  const addNewTransaction = (e) =>{
+  const clearAllTransactions = async() =>{
+    const apiurl = "http://localhost:4000/api"
+    await fetch(apiurl+"/cleartransactions",{
+      method:'PUT'
+    }).then(
+      response=>{
+        response.json().then(json=>{
+          setTransactions('')
+          getTransactions().then(setTransactions)
+        })
+      }
+    )
+
+  }
+
+  const addNewTransaction = async(e) =>{
     e.preventDefault();
     const apiurl = "http://localhost:4000/api"
     const price = name.split(' ')[0]
-    fetch(apiurl+"/transaction",{
+    await fetch(apiurl+"/transaction",{
       method: 'POST',
       headers: {'Content-type':'application/json'},
       body: JSON.stringify({
@@ -33,10 +48,10 @@ function App() {
       }),
     }).then(response =>{
       response.json().then(json =>{
+        getTransactions().then(setTransactions)
         setName('');
         setDescription('');
         setDatetime('');
-        console.log('res',json)
       })
     })
   }
@@ -64,7 +79,7 @@ function App() {
               placeholder="+200 new samsung tv"
             ></input>
             <input
-              type="datetime-local"
+              type="date"
               value={datetime}
               onChange={(e) => setDatetime(e.target.value)}
             ></input>
@@ -93,11 +108,8 @@ function App() {
               </div>
             </div>
           ))}
-          
-          
-          
-          
         </div>
+        <button className="clear-btn" onClick={()=>clearAllTransactions()}>Clear all transactions</button>
       </main>
     </>
   );
